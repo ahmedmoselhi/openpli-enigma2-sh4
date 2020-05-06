@@ -106,6 +106,8 @@ class RealStandby(Screen):
 		else:
 			self.avswitch.setInput("AUX")
 
+		Console().ePopen("/bin/vdstandby -a &")
+
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
 		if gotoShutdownTime:
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
@@ -143,6 +145,7 @@ class RealStandby(Screen):
 			RecordTimer.RecordTimerEntry.stopTryQuitMainloop()
 		self.avswitch.setInput("ENCODER")
 		self.leaveMute()
+		Console().ePopen("/bin/vdstandby -d &")
 		if os.path.exists("/usr/script/standby_leave.sh"):
 			Console().ePopen("/usr/script/standby_leave.sh")
 		if config.usage.remote_fallback_import_standby.value:

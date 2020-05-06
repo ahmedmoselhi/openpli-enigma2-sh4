@@ -23,18 +23,18 @@ class VideoHardware:
 	rates["576p"] =			{ "50Hz":	{ 50: "576p50" } }
 
 	rates["720p"] =			{ "50Hz":	{ 50: "720p50" },
-								"60Hz":		{ 60: "720p60" } }
+					  "60Hz":	{ 60: "720p60" } }
 
 	rates["1080i"] =		{ "50Hz":	{ 50: "1080i50" },
-								"60Hz":		{ 60: "1080i60" } }
+					  "60Hz":	{ 60: "1080i60" } }
 
 	rates["1080p"] =		{ "23Hz":	{ 50: "1080p23" },
-								"24Hz":		{ 60: "1080p24" },
-								"25Hz":		{ 60: "1080p25" },
-								"29Hz":		{ 60: "1080p29" },
-								"30Hz":		{ 60: "1080p30" },
-								"50Hz":		{ 60: "1080p50" },
-								"60Hz":		{ 60: "1080p60" } }
+					  "24Hz":	{ 60: "1080p24" },
+					  "25Hz":	{ 60: "1080p25" },
+					  "29Hz":	{ 60: "1080p29" },
+					  "30Hz":	{ 60: "1080p30" },
+					  "50Hz":	{ 60: "1080p50" },
+					  "60Hz":	{ 60: "1080p60" } }
 
 	rates["PC"] = {
 		"1024x768"  : { 60: "1024x768_60", 70: "1024x768_70", 75: "1024x768_75", 90: "1024x768_90", 100: "1024x768_100" }, #43 60 70 72 75 90 100
@@ -44,8 +44,13 @@ class VideoHardware:
 
 	if SystemInfo["HasScart"]:
 		modes["Scart"] = ["PAL"]
+#	elif SystemInfo["HasComposite"]:
+#		modes["RCA"] = ["576i", "PAL", "NTSC", "Multi"]
 	if SystemInfo["HasYPbPr"]:
 		modes["Component"] = ["720p", "1080p", "1080i", "576p", "576i"]
+#	if SystemInfo["Has2160p"]:
+#		modes["DVI"] = ["720p", "1080p", "2160p", "1080i", "576p", "480p", "576i", "480i"]
+#	else:
 	modes["HDMI"] = ["720p", "1080p", "1080i", "576p", "576i"]
 	modes["HDMI-PC"] = ["PC"]
 
@@ -85,7 +90,7 @@ class VideoHardware:
 
 		self.readAvailableModes()
 		self.readPreferredModes()
-		self.widescreen_modes = set(["720p", "1080i", "1080p"]).intersection(*[self.modes_available])
+		self.widescreen_modes = set(["576i", "576p", "720p", "1080i", "1080p"]).intersection(*[self.modes_available])
 
 		if "DVI-PC" in self.modes and not self.getModeList("DVI-PC"):
 			print "[VideoHardware] remove DVI-PC because of not existing modes"
